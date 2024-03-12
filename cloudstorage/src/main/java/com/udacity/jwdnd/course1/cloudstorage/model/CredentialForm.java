@@ -1,28 +1,16 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-public class Credential {
-    private Integer credentialId;
+public class CredentialForm {
     private String credentialUrl;
     private String credentialUsername;
-    private String key;
     private String credentialPassword;
     private Integer userId;
 
-    public Credential(Integer credentialId, String credentialUrl, String credentialUsername, String key, String credentialPassword, Integer userId) {
-        this.credentialId = credentialId;
+    public CredentialForm(String credentialUrl, String credentialUsername, String credentialPassword, Integer userId) {
         this.credentialUrl = credentialUrl;
         this.credentialUsername = credentialUsername;
-        this.key = key;
         this.credentialPassword = credentialPassword;
         this.userId = userId;
-    }
-
-    public Integer getCredentialId() {
-        return credentialId;
-    }
-
-    public void setCredentialId(Integer credentialId) {
-        this.credentialId = credentialId;
     }
 
     public String getCredentialUrl() {
@@ -41,14 +29,6 @@ public class Credential {
         this.credentialUsername = credentialUsername;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
     public String getCredentialPassword() {
         return credentialPassword;
     }
@@ -65,4 +45,3 @@ public class Credential {
         this.userId = userId;
     }
 }
-

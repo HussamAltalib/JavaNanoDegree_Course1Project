@@ -1,6 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.*;
+import com.udacity.jwdnd.course1.cloudstorage.model.CredentialForm;
+import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
@@ -10,37 +12,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-@RequestMapping("/note")
-public class NoteController {
-    private NoteService noteService;
+@RequestMapping("/credential")
+public class CredentialController {
+    private CredentialService credentialService;
     private UserService userService;
 
-
-    public NoteController(NoteService noteService, UserService userService) {
-        this.noteService = noteService;
+    public CredentialController(CredentialService credentialService, UserService userService) {
+        this.credentialService = credentialService;
         this.userService = userService;
     }
 
     @GetMapping
-    public String homeView(NoteForm note, Model model){
-        model.addAttribute("notes", this.noteService.getAllNotes());
+    public String homeView(CredentialForm credentialForm, Model model){
+        model.addAttribute("credentials", this.credentialService.getAllCredentials());
         return "home";
     }
 
     @PostMapping
-    public String addNote(Authentication authentication, NoteForm noteForm, Model model) {
-        System.out.println(userService.getUserId(authentication.getName()));
+    public String addCredential(Authentication authentication, CredentialForm credentialForm, Model model) {
         int userId = userService.getUserId(authentication.getName());
         System.out.println(userId);
 
         if ((Integer)userId != null) {
-            noteForm.setUserId(userId);
+            credentialForm.setUserId(userId);
 
-            noteService.addNote(noteForm);
+            credentialService.addCredential(credentialForm);
 
-            model.addAttribute("notes", this.noteService.getAllNotes());
+            model.addAttribute("credentials", this.credentialService.getAllCredentials());
         } else {
             // Handle the case where user is not authenticated
             // For example, you can redirect the user to a login page
