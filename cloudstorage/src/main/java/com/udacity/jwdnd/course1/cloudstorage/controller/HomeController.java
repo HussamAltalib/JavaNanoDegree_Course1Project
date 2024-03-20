@@ -18,7 +18,17 @@ public class HomeController {
     }
     @GetMapping
     public String homeView(NoteForm note, Model model){
-//        model.addAttribute("notes", this.noteService.getAllNotes());
+        model.addAttribute("notes", this.noteService.getAllNotes());
         return "home";
     }
+
+//    @GetMapping("/home")
+//    public String getHomePage(Model model, Authentication authentication) {
+//        Integer userId = getUserId(authentication);
+//        model.addAttribute("notes", noteService.getAllNotesForUser(userId));
+//        model.addAttribute("credentials", credentialService.getCredentialsForUser(userId));
+//        model.addAttribute("files", fileService.getFilesForUser(userId));
+//        return "home"; // The Thymeleaf template that displays the dashboard
+//    }
+
 }

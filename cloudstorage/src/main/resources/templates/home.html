@@ -77,8 +77,8 @@
                                 <tbody th:each="note : ${notes}">
                                     <tr>
                                         <td>
+                                            <a th:href="@{/note/deleteNote/{noteId}(noteId=${note.noteId})}" class="btn btn-danger">Delete</a>
                                             <button type="button" class="btn btn-success">Edit</button>
-                                            <a class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row" th:text="${note.noteTitle}"></th>
                                         <td th:text="${note.noteDescription}"></td>
@@ -192,8 +192,22 @@
         <script th:src="@{/js/popper.min.js}"></script>
         <script th:src="@{/js/bootstrap.min.js}"></script>
 
+        <script type="text/javascript">
+            $(document).ready(function() {
+                let hash = window.location.hash;
+                if (hash) {
+                    $('.nav-tabs a[href="' + hash + '"]').tab('show');
+                }
+
+                $('.nav-tabs a').on('click', function() {
+                    window.location.hash = $(this).attr('href');
+                });
+            });
+        </script>
+
         <!--For opening the note modal-->
         <script type="text/javascript">
+
             // For opening the note modal
             function showNoteModal(noteId, noteTitle, noteDescription) {
                 $('#note-id').val(noteId ? noteId : '');
