@@ -14,10 +14,12 @@ import java.util.List;
 public class CredentialService {
     private CredentialMapper credentialMapper;
     private EncryptionService encryptionService;
+    private UserService userService;
 
-    public CredentialService(CredentialMapper credentialMapper, EncryptionService encryptionService) {
+    public CredentialService(CredentialMapper credentialMapper, EncryptionService encryptionService, UserService userService) {
         this.credentialMapper = credentialMapper;
         this.encryptionService = encryptionService;
+        this.userService = userService;
     }
 
     public void addCredential(CredentialForm credentialForm){
@@ -31,8 +33,8 @@ public class CredentialService {
         credentialMapper.insertCredential(new Credential(null, credentialForm.getCredentialUrl(), credentialForm.getCredentialUsername(), encodedKey, encryptedPassword, credentialForm.getUserId()));
     }
 
-    public List<Credential> getAllCredentials() {
-        List<Credential> credentials = credentialMapper.getAllCredentials();
+    public List<Credential> getAllCredentials(int userId) {
+        List<Credential> credentials = credentialMapper.getAllCredentials(userId);
         for(Credential credential : credentials){
             String decryptedPassword = encryptionService.decryptValue(credential.getCredentialPassword(), credential.getKey());
             credential.setCredentialPassword(decryptedPassword);

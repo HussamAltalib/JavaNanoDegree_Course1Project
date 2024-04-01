@@ -16,15 +16,25 @@ public class NoteService {
     }
 
     public void addNote(NoteForm noteForm){
-        Note newNote = new Note(null, noteForm.getNoteTitle(), noteForm.getNoteDescription(), noteForm.getUserId());
+        Note newNote = new Note(noteForm.getNoteId(), noteForm.getNoteTitle(), noteForm.getNoteDescription(), noteForm.getUserId());
         noteMapper.insertNote(newNote);
     }
 
-    public List<Note> getAllNotes() {
-        return noteMapper.getAllNotes();
+    public List<Note> getAllNotes(int UserId) {
+        return noteMapper.getAllNotes(UserId);
     }
 
     public void deleteNoteById(int noteId){
         noteMapper.deleteNoteById(noteId);
+    }
+
+    public void updateNote(NoteForm noteForm){
+        System.out.println("in service before");
+        Note newNote = new Note(noteForm.getNoteId(), noteForm.getNoteTitle(), noteForm.getNoteDescription(), noteForm.getUserId());
+        noteMapper.updateNote(newNote);
+    }
+
+    public Note getNoteById(int noteId){
+        return noteMapper.getNoteById(noteId);
     }
 }

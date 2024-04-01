@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Note</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Edit Note</h2>
+    <!-- The form now submits to your `updateNote` endpoint -->
+    <form action="#" th:action="@{/note/updateNote}" th:object="${noteForm}" method="POST">
+        <!-- Assuming `noteId` is part of your NoteForm model to track which note is being edited -->
+        <input type="hidden" th:field="*{noteId}" />
+        <div class="form-group">
+            <label for="note-title">Title</label>
+            <!-- Corrected `th:field` for title -->
+            <input type="text" th:field="*{noteTitle}" class="form-control" id="note-title" maxlength="20" required>
+        </div>
+        <div class="form-group">
+            <label for="note-description">Description</label>
+            <!-- Corrected `th:field` for description -->
+            <textarea th:field="*{noteDescription}" class="form-control" id="note-description" rows="5" maxlength="1000" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

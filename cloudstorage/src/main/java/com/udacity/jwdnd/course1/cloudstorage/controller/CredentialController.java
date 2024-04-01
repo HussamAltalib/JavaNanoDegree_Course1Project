@@ -24,8 +24,9 @@ public class CredentialController {
     }
 
     @GetMapping
-    public String homeView(CredentialForm credentialForm, Model model){
-        model.addAttribute("credentials", this.credentialService.getAllCredentials());
+    public String homeView(Authentication authentication, CredentialForm credentialForm, Model model){
+        int userId = userService.getUserId(authentication.getName());
+        model.addAttribute("credentials", this.credentialService.getAllCredentials(userId));
         return "home";
     }
 
@@ -39,7 +40,7 @@ public class CredentialController {
 
             credentialService.addCredential(credentialForm);
 
-            model.addAttribute("credentials", this.credentialService.getAllCredentials());
+            model.addAttribute("credentials", this.credentialService.getAllCredentials(userId));
         } else {
             // Handle the case where user is not authenticated
             // For example, you can redirect the user to a login page

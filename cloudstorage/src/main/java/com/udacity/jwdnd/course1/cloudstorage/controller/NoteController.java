@@ -23,8 +23,9 @@ public class NoteController {
     }
 
     @GetMapping
-    public String homeView(NoteForm note, Model model){
-        model.addAttribute("notes", this.noteService.getAllNotes());
+    public String homeView(Authentication authentication, NoteForm note, Model model){
+        int userId = userService.getUserId(authentication.getName());
+        model.addAttribute("notes", this.noteService.getAllNotes(userId));
         return "home";
     }
 
@@ -39,7 +40,7 @@ public class NoteController {
 
             noteService.addNote(noteForm);
 
-            model.addAttribute("notes", this.noteService.getAllNotes());
+            model.addAttribute("notes", this.noteService.getAllNotes(userId));
         } else {
             // Handle the case where user is not authenticated
             // For example, you can redirect the user to a login page
@@ -48,28 +49,6 @@ public class NoteController {
 
         return "home";
     }
-
-//    @PostMapping("/deleteNote/{id}")
-//    public String deleteNote(@PathVariable int id ) {
-//        System.out.println(" delete id "+id);
-//        // Logic to delete the note from the database using NoteService
-//        noteService.deleteNoteById(id);
-//        return "redirect:/note"; // Redirect to the home page or any other appropriate page
-//    }
-
-//    @DeleteMapping("/deleteNote/{id}")
-//    public String deleteProduct(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
-//        noteService.deleteNoteById(id);
-//        redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully");
-//        return "redirect:/note";
-//    }
-
-//    @RequestMapping(value = "/deleteNote", method = RequestMethod.POST)
-//    public String handleDeleteUser(@ModelAttribute("note") Note note) {
-//        System.out.println(note.getNoteId());
-//        System.out.println("test");
-//        return "redirect:/note";
-//    }
 
     @GetMapping("/deleteNote/{noteId}")
     public String deleteNote(@PathVariable("noteId") int noteId, RedirectAttributes redirectAttributes) {
@@ -80,4 +59,22 @@ public class NoteController {
         redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully!");
         return "redirect:/note";
     }
+
+    @GetMapping("/editNote/{noteId}")
+    public String editNote(@PathVariable("noteId") int noteId, Model model) {
+        Note note = noteService.getNoteById(noteId);
+        model.addAttribute("noteForm", note);
+        return "editNote";
+    }
+
+    @PostMapping("/updateNote")
+    public String updateNote(@ModelAttribute("noteForm") NoteForm noteForm, RedirectAttributes redirectAttributes) {
+        System.out.println("in controller before");
+        noteService.updateNote(noteForm);
+        System.out.println("in controller after");
+        redirectAttributes.addFlashAttribute("successMessage", "Note updated successfully!");
+        return "redirect:/note";
+    }
+
 }
+
