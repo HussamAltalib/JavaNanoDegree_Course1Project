@@ -26,7 +26,7 @@ public class NoteController {
     public String homeView(Authentication authentication, NoteForm note, Model model){
         int userId = userService.getUserId(authentication.getName());
         model.addAttribute("notes", this.noteService.getAllNotes(userId));
-        return "home";
+        return "redirect:/home";
     }
 
     @PostMapping

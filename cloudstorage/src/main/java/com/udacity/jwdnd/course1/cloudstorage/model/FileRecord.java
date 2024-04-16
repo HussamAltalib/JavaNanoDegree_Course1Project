@@ -1,14 +1,16 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
-public class File {
+public class FileRecord {
     private int fileId;
     private String fileName;
     private String contentType;
     private String fileSize;
     private int userId;
     private byte[] fileData;
+    public FileRecord() {
 
-    public File(int fileId, String fileName, String contentType, String fileSize, int userId, byte[] fileData) {
+    }
+    public FileRecord(int fileId, String fileName, String contentType, String fileSize, int userId, byte[] fileData) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;

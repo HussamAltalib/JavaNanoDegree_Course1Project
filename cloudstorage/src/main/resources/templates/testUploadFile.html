@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>File Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>File Management</h2>
+
+    <!-- Display message -->
+    <div th:if="${message}">
+        <div class="alert alert-info" th:text="${message}"></div>
+    </div>
+
+    <!-- File Upload Form -->
+    <form th:action="@{/files/upload}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="fileUpload">Select fileRecord to upload:</label>
+            <input type="fileRecord" class="form-control-fileRecord" id="fileUpload" name="fileUpload" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload File</button>
+    </form>
+
+    <hr>
+
+    <!-- List of Files -->
+    <h4>Uploaded Files</h4>
+    <div class="list-group">
+        <div th:each="fileRecord : ${files}">
+            <a href="#" class="list-group-item list-group-item-action" th:text="${fileRecord.fileName}"></a>
+            <a th:href="@{/files/delete/{fileId}(fileId=${fileRecord.fileId})}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

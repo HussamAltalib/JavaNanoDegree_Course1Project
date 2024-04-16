@@ -20,8 +20,8 @@ public class NoteService {
         noteMapper.insertNote(newNote);
     }
 
-    public List<Note> getAllNotes(int UserId) {
-        return noteMapper.getAllNotes(UserId);
+    public List<Note> getAllNotes(int userId) {
+        return noteMapper.getAllNotes(userId);
     }
 
     public void deleteNoteById(int noteId){
