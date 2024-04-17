@@ -3,6 +3,10 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.model.FileRecord;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import org.springframework.core.io.Resource;
 import java.io.IOException;
+
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @Controller
 @RequestMapping("/files")
@@ -61,22 +71,17 @@ public class FileController {
         return "redirect:/files";
     }
 
-//    @GetMapping("/{fileId}")
-//    public ResponseEntity<Resource> viewFile(@PathVariable String fileId) {
-//        try {
-//            // Assuming files are stored in a directory and fileId corresponds to the filename
-//            Path fileLocation = Paths.get("path/to/your/files/directory", fileId);
-//            Resource resource = new UrlResource(fileLocation.toUri());
-//
-//            if (resource.exists() || resource.isReadable()) {
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
-//                        .body(resource);
-//            } else {
-//                return ResponseEntity.notFound().build();
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.internalServerError().build();
-//        }
-//    }
+
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable int fileId) throws Exception{
+        FileRecord attachment = null;
+        attachment = fileService.getAttachment(fileId);
+        return ResponseEntity.ok()
+            .contentType(MediaType.parseMediaType(attachment.getContentType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + attachment.getContentType()
+                                + "\"")
+                    .body(new ByteArrayResource(attachment.getFileData()));
+    }
+
 }
