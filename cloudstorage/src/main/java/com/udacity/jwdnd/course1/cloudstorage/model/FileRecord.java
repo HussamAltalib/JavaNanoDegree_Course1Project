@@ -5,13 +5,13 @@ public class FileRecord {
     private String fileName;
     private String contentType;
 
-    private String fileSize;
+    private long fileSize;
     private int userId;
     private byte[] fileData;
     public FileRecord() {
 
     }
-    public FileRecord(int fileId, String fileName, String contentType, String fileSize, int userId, byte[] fileData) {
+    public FileRecord(int fileId, String fileName, String contentType, long fileSize, int userId, byte[] fileData) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.contentType = contentType;
@@ -44,11 +44,11 @@ public class FileRecord {
         this.contentType = contentType;
     }
 
-    public String getFileSize() {
+    public long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(String fileSize) {
+    public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
     }
 

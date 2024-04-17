@@ -25,4 +25,9 @@ public interface FileMapper {
 
     @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
     void deleteFileById(int fileId);
+
+
+    @Select("SELECT COUNT(*) FROM FILES WHERE filename = #{filename} AND userid = #{userId}")
+    int countFilesByNameAndUserId(@Param("filename") String filename, @Param("userId") Integer userId);
+
 }

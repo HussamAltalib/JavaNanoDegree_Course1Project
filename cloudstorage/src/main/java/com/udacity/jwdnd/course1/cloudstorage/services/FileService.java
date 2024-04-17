@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -39,11 +40,28 @@ public class FileService {
         return fileMapper.getAllFiles(userId);
     }
 
-    public void addFile(FileRecord fileRecord) {
+    public void uploadFile(MultipartFile fileUpload, Integer userId) throws IOException {
+        String filename = fileUpload.getOriginalFilename();
+
+        if (isFilenameAvailable(filename, userId)) {
+            FileRecord fileRecord = new FileRecord();
+            fileRecord.setFileName(filename);
+            fileRecord.setContentType(fileUpload.getContentType());
+            fileRecord.setFileSize(fileUpload.getSize());
+            fileRecord.setUserId(userId);
+            fileRecord.setFileData(fileUpload.getBytes());
 
             fileMapper.insertFile(fileRecord);
-
+        } else {
+            throw new IOException("A file with the same name already exists.");
+        }
     }
+
+    public boolean isFilenameAvailable(String filename, Integer userId) {
+        return fileMapper.countFilesByNameAndUserId(filename, userId) == 0;
+    }
+
+
 
     public FileRecord getFileById(int fileId){
         return fileMapper.getFileById(fileId);
@@ -54,18 +72,6 @@ public class FileService {
         fileMapper.deleteFileById(fileId);
     }
 
-    public Resource loadFileAsResource(String fileName) {
-        try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
-            if (!resource.exists() || !resource.isReadable()) {
-                throw new RuntimeException("File not found " + fileName);
-            }
-            return resource;
-        } catch (MalformedURLException ex) {
-            throw new RuntimeException("Malformed URL", ex);
-        }
-    }
 
     public FileRecord getAttachment(int fileId) throws Exception {
         FileRecord fileRecord = fileMapper.getFileById(fileId);

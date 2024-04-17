@@ -47,21 +47,20 @@ public class FileController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("fileUpload") MultipartFile fileUpload,
                              Authentication authentication,
-                             RedirectAttributes redirectAttributes)throws IOException {
-            System.out.println("in the uploadfile method");
-            int userId = userService.getUserId(authentication.getName());
-            FileRecord fileRecord = new FileRecord();
-            fileRecord.setFileName(fileUpload.getOriginalFilename());
-            fileRecord.setContentType(fileUpload.getContentType());
-            fileRecord.setFileSize(String.valueOf(fileUpload.getSize()));
-            fileRecord.setUserId(userId);
-            fileRecord.setFileData(fileUpload.getBytes());
+                             RedirectAttributes redirectAttributes) {
 
-            fileService.addFile(fileRecord);
+        int userId = userService.getUserId(authentication.getName());
+
+        try {
+            fileService.uploadFile(fileUpload, userId);
             redirectAttributes.addFlashAttribute("message", "File uploaded successfully!");
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
 
         return "redirect:/files";
     }
+
 
     // Endpoint to delete a file
     @GetMapping("/delete/{fileId}")
