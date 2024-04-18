@@ -18,7 +18,7 @@
     <form th:action="@{/files/upload}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="fileUpload">Select fileRecord to upload:</label>
-            <input type="fileRecord" class="form-control-fileRecord" id="fileUpload" name="fileUpload" required>
+            <input type="File" class="form-control-fileRecord" id="fileUpload" name="fileUpload" required>
         </div>
         <button type="submit" class="btn btn-primary">Upload File</button>
     </form>

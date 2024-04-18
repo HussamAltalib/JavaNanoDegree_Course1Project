@@ -47,7 +47,7 @@ public class NoteController {
             return "redirect:/login";
         }
 
-        return "home";
+        return "redirect:/home";
     }
 
     @GetMapping("/deleteNote/{noteId}")
@@ -57,7 +57,7 @@ public class NoteController {
         System.out.println("test");
         noteService.deleteNoteById(noteId);
         redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully!");
-        return "redirect:/note";
+        return "redirect:/home";
     }
 
     @GetMapping("/editNote/{noteId}")

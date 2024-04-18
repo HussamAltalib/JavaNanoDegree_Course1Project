@@ -29,8 +29,9 @@ public class HomeController {
     @GetMapping
     public String homeView(Authentication authentication, NoteForm note, Model model){
         int userId = userService.getUserId(authentication.getName());
-        model.addAttribute("notes", this.noteService.getAllNotes(userId));
         model.addAttribute("files", this.fileService.getAllFiles(userId));
+        model.addAttribute("notes", this.noteService.getAllNotes(userId));
+
         return "home";
     }
 

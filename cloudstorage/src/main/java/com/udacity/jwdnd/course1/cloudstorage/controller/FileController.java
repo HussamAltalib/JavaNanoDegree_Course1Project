@@ -37,9 +37,10 @@ public class FileController {
         this.userService = userService;
     }
     @RequestMapping
-    public String showFiles(Authentication authentication, Model model){
+    public String showFiles(Authentication authentication, Model model, RedirectAttributes redirectAttributes){
         int userId = userService.getUserId(authentication.getName());
         model.addAttribute("files", this.fileService.getAllFiles(userId));
+
         return "redirect:/home";
     }
 
@@ -55,10 +56,10 @@ public class FileController {
             fileService.uploadFile(fileUpload, userId);
             redirectAttributes.addFlashAttribute("message", "File uploaded successfully!");
         } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute("message", "Error: " + e.getMessage());
         }
 
-        return "redirect:/files";
+        return "redirect:/home";
     }
 
 
@@ -67,7 +68,7 @@ public class FileController {
     public String deleteFile(@PathVariable Integer fileId, RedirectAttributes redirectAttributes) {
         fileService.removeFile(fileId);
         redirectAttributes.addFlashAttribute("message", "File deleted successfully!");
-        return "redirect:/files";
+        return "redirect:/home";
     }
 
 
