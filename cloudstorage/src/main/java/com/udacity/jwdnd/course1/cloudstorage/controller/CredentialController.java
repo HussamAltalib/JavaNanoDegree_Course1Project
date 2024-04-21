@@ -27,7 +27,7 @@ public class CredentialController {
     public String homeView(Authentication authentication, CredentialForm credentialForm, Model model){
         int userId = userService.getUserId(authentication.getName());
         model.addAttribute("credentials", this.credentialService.getAllCredentials(userId));
-        return "home";
+        return "redirect:/home";
     }
 
     @PostMapping
@@ -47,6 +47,6 @@ public class CredentialController {
             return "redirect:/login";
         }
 
-        return "home";
+        return "redirect:/home";
     }
 }

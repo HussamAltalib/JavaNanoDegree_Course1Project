@@ -30,15 +30,17 @@ public class CredentialService {
         String encryptedPassword = encryptionService.encryptValue(credentialForm.getCredentialPassword(), encodedKey);
 //        String decryptedPassword = encryptionService.decryptValue(encryptedPassword, encodedKey);
 
-        credentialMapper.insertCredential(new Credential(null, credentialForm.getCredentialUrl(), credentialForm.getCredentialUsername(), encodedKey, encryptedPassword, credentialForm.getUserId()));
+        Credential newCredential = new Credential(null, credentialForm.getCredentialUrl(), credentialForm.getCredentialUsername(), encodedKey, encryptedPassword, credentialForm.getUserId());
+        System.out.println(newCredential);
+        credentialMapper.insertCredential(newCredential);
     }
 
     public List<Credential> getAllCredentials(int userId) {
         List<Credential> credentials = credentialMapper.getAllCredentials(userId);
-        for(Credential credential : credentials){
-            String decryptedPassword = encryptionService.decryptValue(credential.getCredentialPassword(), credential.getKey());
-            credential.setCredentialPassword(decryptedPassword);
-        }
+//        for(Credential credential : credentials){
+//            String decryptedPassword = encryptionService.decryptValue(credential.getCredentialPassword(), credential.getKey());
+//            credential.setCredentialPassword(decryptedPassword);
+//        }
         return credentials;
     }
 }
