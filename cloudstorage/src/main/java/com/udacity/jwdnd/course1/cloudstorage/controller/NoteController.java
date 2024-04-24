@@ -52,9 +52,6 @@ public class NoteController {
 
     @GetMapping("/deleteNote/{noteId}")
     public String deleteNote(@PathVariable("noteId") int noteId, RedirectAttributes redirectAttributes) {
-        System.out.println("test");
-        System.out.println(noteId);
-        System.out.println("test");
         noteService.deleteNoteById(noteId);
         redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully!");
         return "redirect:/home";
@@ -69,9 +66,7 @@ public class NoteController {
 
     @PostMapping("/updateNote")
     public String updateNote(@ModelAttribute("noteForm") NoteForm noteForm, RedirectAttributes redirectAttributes) {
-        System.out.println("in controller before");
         noteService.updateNote(noteForm);
-        System.out.println("in controller after");
         redirectAttributes.addFlashAttribute("successMessage", "Note updated successfully!");
         return "redirect:/note";
     }

@@ -1,16 +1,16 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.CredentialForm;
 import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
-import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/credential")
@@ -49,4 +49,27 @@ public class CredentialController {
 
         return "redirect:/home";
     }
+
+    @GetMapping("/deleteCredential/{credentialid}")
+    public String deleteCredential(@PathVariable("credentialid") int credentialid, RedirectAttributes redirectAttributes) {
+        credentialService.deleteCredentialById(credentialid);
+        redirectAttributes.addFlashAttribute("successMessage", "Credential deleted successfully!");
+        return "redirect:/home";
+    }
+
+    @GetMapping("/editCredential/{credentialId}")
+    public String editCredential(@PathVariable("credentialId") int credentialId, Model model){
+        Credential credential = credentialService.getCredentialById(credentialId);
+        model.addAttribute("credentialForm", credential);
+        return "editCredential";
+    }
+
+    @PostMapping("/updateCredential")
+    public String updateCredential(@ModelAttribute("credentialForm") CredentialForm credentialForm, RedirectAttributes redirectAttributes){
+        System.out.println("in update in the controller");
+        credentialService.updateCredential(credentialForm);
+        return "redirect:/credential";
+    }
+
+
 }

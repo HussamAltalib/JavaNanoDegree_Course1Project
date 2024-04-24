@@ -25,6 +25,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http
+                // Permit all requests to the H2 console without authentication
+                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
+                // Other configuration
+                .and()
+                .csrf().ignoringAntMatchers("/h2-console/**")
+                .and()
+                .headers().frameOptions().sameOrigin();
+
         http.authorizeRequests()
                 .antMatchers("/signup", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated();
@@ -44,7 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/home", true);
+
+
     }
+
+
 
 
 }

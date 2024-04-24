@@ -1,50 +1,50 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
 public class CredentialForm {
-    private Integer credentialId;
-    private String credentialUrl;
-    private String credentialUsername;
-    private String credentialPassword;
+    private Integer credentialid;
+    private String url;
+    private String username;
+    private String password;
     private Integer userId;
 
-    public CredentialForm(Integer credentialId, String credentialUrl, String credentialUsername, String credentialPassword, Integer userId) {
-        this.credentialId = credentialId;
-        this.credentialUrl = credentialUrl;
-        this.credentialUsername = credentialUsername;
-        this.credentialPassword = credentialPassword;
+    public CredentialForm(Integer credentialid, String url, String username, String password, Integer userId) {
+        this.credentialid = credentialid;
+        this.url = url;
+        this.username = username;
+        this.password = password;
         this.userId = userId;
     }
 
-    public Integer getCredentialId() {
-        return credentialId;
+    public Integer getCredentialid() {
+        return credentialid;
     }
 
-    public void setCredentialId(Integer credentialId) {
-        this.credentialId = credentialId;
+    public void setCredentialid(Integer credentialid) {
+        this.credentialid = credentialid;
     }
 
-    public String getCredentialUrl() {
-        return credentialUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setCredentialUrl(String credentialUrl) {
-        this.credentialUrl = credentialUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getCredentialUsername() {
-        return credentialUsername;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCredentialUsername(String credentialUsername) {
-        this.credentialUsername = credentialUsername;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getCredentialPassword() {
-        return credentialPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCredentialPassword(String credentialPassword) {
-        this.credentialPassword = credentialPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getUserId() {
@@ -53,5 +53,16 @@ public class CredentialForm {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "CredentialForm{" +
+                "credentialid=" + credentialid +
+                ", credentialUrl='" + url + '\'' +
+                ", credentialUsername='" + username + '\'' +
+                ", credentialPassword='" + password + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }
