@@ -42,8 +42,6 @@ public class NoteController {
 
             model.addAttribute("notes", this.noteService.getAllNotes(userId));
         } else {
-            // Handle the case where user is not authenticated
-            // For example, you can redirect the user to a login page
             return "redirect:/login";
         }
 

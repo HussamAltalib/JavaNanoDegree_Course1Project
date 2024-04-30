@@ -28,7 +28,6 @@ public class CredentialService {
         random.nextBytes(key);
         String encodedKey = Base64.getEncoder().encodeToString(key);
         String encryptedPassword = encryptionService.encryptValue(credentialForm.getPassword(), encodedKey);
-//        String decryptedPassword = encryptionService.decryptValue(encryptedPassword, encodedKey);
 
         Credential newCredential = new Credential(null, credentialForm.getUrl(), credentialForm.getUsername(), encodedKey, encryptedPassword, credentialForm.getUserId());
         System.out.println(newCredential);
@@ -37,10 +36,7 @@ public class CredentialService {
 
     public List<Credential> getAllCredentials(int userId) {
         List<Credential> credentials = credentialMapper.getAllCredentials(userId);
-//        for(Credential credential : credentials){
-//            String decryptedPassword = encryptionService.decryptValue(credential.getCredentialPassword(), credential.getKey());
-//            credential.setCredentialPassword(decryptedPassword);
-//        }
+
         return credentials;
     }
 
@@ -59,8 +55,6 @@ public class CredentialService {
         System.out.println("in update in the service");
         Credential credential = credentialMapper.getCrednetialById(credentialForm.getCredentialid());
 
-
-
         credential.setUrl(credentialForm.getUrl());
         credential.setUsername(credentialForm.getUsername());
 
@@ -68,7 +62,6 @@ public class CredentialService {
 
         credential.setPassword(encryptedPassword);
         credential.setUserId(credentialForm.getUserId());
-
 
         credentialMapper.updateCredential(credential);
      }

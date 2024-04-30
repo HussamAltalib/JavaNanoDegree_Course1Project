@@ -68,7 +68,7 @@ public class CredentialController {
     public String updateCredential(@ModelAttribute("credentialForm") CredentialForm credentialForm, RedirectAttributes redirectAttributes){
         System.out.println("in update in the controller");
         credentialService.updateCredential(credentialForm);
-        return "redirect:/credential";
+        return "redirect:/home";
     }
 
 

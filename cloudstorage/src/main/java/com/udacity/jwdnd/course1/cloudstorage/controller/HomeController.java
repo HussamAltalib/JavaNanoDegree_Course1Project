@@ -18,7 +18,6 @@ public class HomeController {
     UserService userService;
     CredentialService credentialService;
 
-
     public HomeController(FileService fileService, NoteService noteService, UserService userService, CredentialService credentialService) {
         this.fileService = fileService;
         this.noteService = noteService;
@@ -34,14 +33,5 @@ public class HomeController {
 
         return "home";
     }
-
-//    @GetMapping("/home")
-//    public String getHomePage(Model model, Authentication authentication) {
-//        Integer userId = getUserId(authentication);
-//        model.addAttribute("notes", noteService.getAllNotesForUser(userId));
-//        model.addAttribute("credentials", credentialService.getCredentialsForUser(userId));
-//        model.addAttribute("files", fileService.getFilesForUser(userId));
-//        return "home"; // The Thymeleaf template that displays the dashboard
-//    }
 
 }
